@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>~SAAR</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(45deg, #ED076B, #D3D9E0);
+            height: 100vh;
+        }
+        h1{
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+        }
+        span{
+            color: #e90467;
+        }
+        button{
+            background: #ED076B;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+        }
+        button:hover{
+            background: #e90467;
+            transform: scale(1.1);
+        }
+        .message{
+            color: white;
+            max-width: 750px;
+            margin-top: 50px;
+            font-size: 20px;
+            line-height: 1.6;
+            animation: fadeIn 3s;
+            display: none;
+            position: relative; /* ensure it sits above absolute-positioned hearts */
+            z-index: 2;
+        }
+        .hearts{
+            position: absolute;
+            inset: 0; /* fill the viewport */
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* put hearts above background but behind modal/message */
+            pointer-events: none; /* clicks pass through */
+        }
+        .heart{
+            position: absolute;
+            color: #ED076B;
+            animation: floatUp 6s linear forwards;
+            will-change: transform, opacity;
+            font-size: 28px; /* default size; JS will override with random sizes */
+            opacity: 0.95;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.35);
+        }
+        @keyframes fadeIn {
+            from{opacity: 0;}
+            to{opacity: 1;}
+        }
+        @keyframes floatUp {
+             0% {transform: translateY(100vh) scale(1);}
+        100% {transform: translateY(-10vh) scale(1.5);}
+        }
+    </style>
+</head>
+<body>
+    <h1>A surprise for you my Love <span>❤</span></h1>
+    <button onclick="showMessage()">Click to Reveal</button>
+    <div class="message" id="message">
+        <h1>Happy Anniversary, Syed Sabeeh Shah</h1>
+        <p>My love, every day with you feels like a dream I never want to wake up from. You are the calm in my chaos, the light in my dark days, and the reason behind every smile on my face. You're not just my love; you're my peace, my forever, my everything. No distance, no time, no storm can ever change what I feel for you it only grows deeper with breath I take.</p>
+        <br><br>
+        <p>Your love - <b>Shehwar</b></p>
+    </div>
+    <div class="hearts" id="hearts"></div>
+
+    <script>
+        function showMessage(){
+            document.getElementById('message').style.display = "block";
+
+            const container = document.getElementById('hearts');
+
+            const spawnCount = 12; 
+            const maxTotalHearts = 60; 
+
+            const currentHearts = container.children.length;
+            const allowed = Math.max(0, Math.min(spawnCount, maxTotalHearts - currentHearts));
+
+            for(let i = 0; i < allowed; i++){
+                const heart = document.createElement('div');
+                heart.innerHTML = '💕';
+                heart.classList.add('heart');
+
+                heart.style.left = (Math.random() * 100) + 'vw';
+
+                heart.style.fontSize = (14 + Math.random() * 40) + 'px';
+                heart.style.animationDuration = (3 + Math.random() * 5) + 's';
+
+                heart.style.animationDelay = (Math.random() * 0.6) + 's';
+
+                container.appendChild(heart);
+                const removeAfter = (parseFloat(heart.style.animationDuration) + parseFloat(heart.style.animationDelay)) * 1000 + 500;
+                setTimeout(() => heart.remove(), removeAfter);
+            }
+        }
+    </script>
+</body>
+</html>
